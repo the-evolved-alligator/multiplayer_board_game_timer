@@ -95,7 +95,6 @@ A host should configure and start in under one minute.
 1. Setup (players, mode, limits)
 2. Live Timer
 3. Game Summary
-4. Settings
 
 ---
 
@@ -112,6 +111,7 @@ Required:
 * Finish credits the active player's elapsed time before summary
 * End-of-game totals (sorted) shown in Game Summary
 * Installable **PWA** for game-night offline usage
+* Frontend-only, local-first operation on a single shared control device
 
 Optional (future):
 

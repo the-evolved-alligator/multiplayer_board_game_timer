@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# Multiplayer Board Game Timer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend-only, local-first turn timer for in-person board game sessions.
 
-Currently, two official plugins are available:
+The app is designed for one shared control device (typically a phone). It keeps turn flow clear, enforces consistent timing behavior, and produces an end-of-game time summary.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What The Project Does
 
-## React Compiler
+- Configure players (2+), turn duration, order, and player colors.
+- Run a live turn timer with clear active-player state.
+- Support host actions during play: `Pause/Resume`, `Next/Previous`, `Skip/Advance`, and `Finish`.
+- Track per-player totals using deterministic rules.
+- Show sorted totals in a final Game Summary screen.
+- Work offline as an installable PWA.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Scoring / Credit Rules
 
-## Expanding the ESLint configuration
+- **Timeout (`0`)**: credit the player with the full configured turn length.
+- **Next/Previous**: credit elapsed time to the outgoing player, then switch.
+- **Skip/Advance**: credit `0` to the outgoing player.
+- **Finish**: credit elapsed time for the currently active player (unless already timed out and credited).
+- **Pause**: countdown and accumulation stop until resumed.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React + TypeScript + Vite
+- `vite-plugin-pwa` for installability/offline shell
+- Local storage for player templates
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Run Locally
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local URL printed by Vite.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+## Project Structure
+
+- `src/screens/SetupScreen.tsx` - Player setup and session configuration
+- `src/screens/LiveTimerScreen.tsx` - Core turn flow and controls
+- `src/screens/SummaryScreen.tsx` - End-of-game totals
+- `src/domain/` - Shared timer/template logic
+- `VISION.MD` - Product vision and behavior contract
+- `CHECKLIST.MD` - Implementation checklist
+
+## Scope Notes
+
+- Frontend-only MVP
+- Local-only (no cloud sync, no multi-device sync)
+- Accessibility enhancements to palette/contrast can be iterated later
