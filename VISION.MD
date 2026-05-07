@@ -64,23 +64,26 @@ A host should configure and start in under one minute.
 
 * Add players and free reordering in Setup
 * Turn countdown with clear active-player highlight (turn length configurable in Setup, e.g. 60 seconds)
-* Next/previous player controls: host switches to the next/previous player by ending the current timer and starting the new player's timer (no time credit on manual end)
+* Next/previous player controls: host switches to the next/previous player by ending the current timer and starting the new player's timer
+  * On Next/Previous, credit the outgoing player with the elapsed time used in that turn
 * Skip/Advance control: host can end the current turn early
   * When host uses Skip/Advance, do not credit elapsed seconds to the current player's total
 * Timeout handling: when time hits 0, the timer pauses and host action is required to advance/resume
   * When timeout occurs (timer reaches 0), credit the timed-out player with the full configured turn length
 * Pause handling: when paused, the countdown freezes and time accumulation stops until resumed
+* Finish handling: when host ends the game, credit the currently active player with elapsed time (unless already in timeout state)
 
 ### 6.2 Fairness and Pace
 
 * Per-player total time tracking
 * Timeout cues (sound/vibration/visual)
-* Stable per-player color: auto-assigned on player creation, editable in Setup; use as the background styling so active player is instantly recognizable
+* Stable per-player color: randomly auto-assigned from presets on player creation, editable via presets in Setup; use as the background styling so active player is instantly recognizable
 * Accessibility improvements to the color palette can be iterated later
 
 ### 6.3 Session Output
 
 * End-of-game time summary by player (sorted by total time)
+* Keep live screen uncluttered: show final totals at game end
 * Export/share final timing results (future)
 
 ---
@@ -104,9 +107,10 @@ Required:
 * Active player state + visible countdown
 * Timeout pauses timer; host must confirm advance/resume
 * Pause/resume and manual turn advance (host-controlled)
-* Next/Previous (host) ends current turn and starts new player's timer
+* Next/Previous (host) ends current turn, credits elapsed time, and starts new player's timer
 * Skip/Advance control to end a turn early (no time credit on manual advance)
-* Per-player elapsed totals
+* Finish credits the active player's elapsed time before summary
+* End-of-game totals (sorted) shown in Game Summary
 * Installable **PWA** for game-night offline usage
 
 Optional (future):
@@ -147,7 +151,7 @@ Goal:
 
 * Player setup (2+ players)
 * Turn countdown + next player actions
-* Per-player cumulative time display
+* Per-player cumulative time tracking with final display in Game Summary
 * Timeout pause + host-confirmed advance/resume
 * Pause/resume and reset (host-controlled)
   * Reset clears totals, returns to Setup, and keeps the previously used player setup

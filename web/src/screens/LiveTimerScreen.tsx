@@ -67,6 +67,16 @@ export function LiveTimerScreen({
     return Math.max(0, Math.min(turnSeconds, turnSeconds - remainingSeconds))
   }
 
+  function totalsWithActiveTurnApplied() {
+    // Timeout already credits full turn at the transition to isTimeout=true.
+    if (session.isTimeout) return session.totalsById
+    const currentId = template.players[session.activeIndex]?.id
+    if (!currentId) return session.totalsById
+    const totalsById = { ...session.totalsById }
+    totalsById[currentId] = (totalsById[currentId] ?? 0) + elapsedSecondsForCurrentTurn()
+    return totalsById
+  }
+
   // timeout detection + transition
   useEffect(() => {
     const lastTick = lastTickRef.current
@@ -134,7 +144,7 @@ export function LiveTimerScreen({
         <button
           className="btn"
           type="button"
-          onClick={() => onFinish({ template, totalsById: session.totalsById })}
+          onClick={() => onFinish({ template, totalsById: totalsWithActiveTurnApplied() })}
         >
           Finish
         </button>
