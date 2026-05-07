@@ -38,7 +38,62 @@ export function LiveTimerScreen({
   // timer model: track a target end timestamp when running (remainingMs at resume/start)
   const endAtRef = useRef<number | null>(null)
   const lastTickRef = useRef<number>(Date.now())
+  const audioCtxRef = useRef<AudioContext | null>(null)
+  const beepIntervalRef = useRef<number | null>(null)
+  const vibrationIntervalRef = useRef<number | null>(null)
   const [now, setNow] = useState(() => Date.now())
+
+  function playBeep() {
+    try {
+      const Ctx = window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+      if (!Ctx) return
+      if (!audioCtxRef.current) audioCtxRef.current = new Ctx()
+      const ctx = audioCtxRef.current
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = 'square'
+      osc.frequency.value = 880
+      gain.gain.value = 0.08
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      const startAt = ctx.currentTime
+      const stopAt = startAt + 0.16
+      osc.start(startAt)
+      osc.stop(stopAt)
+    } catch {
+      // ignore browser/audio restrictions
+    }
+  }
+
+  function startTimeoutAlerts() {
+    if (beepIntervalRef.current !== null) return
+
+    playBeep()
+    beepIntervalRef.current = window.setInterval(() => {
+      playBeep()
+    }, 700)
+
+    if ('vibrate' in navigator) {
+      navigator.vibrate([300, 120, 300, 120, 300])
+      vibrationIntervalRef.current = window.setInterval(() => {
+        navigator.vibrate([300, 120, 300, 120, 300])
+      }, 1200)
+    }
+  }
+
+  function stopTimeoutAlerts() {
+    if (beepIntervalRef.current !== null) {
+      window.clearInterval(beepIntervalRef.current)
+      beepIntervalRef.current = null
+    }
+    if (vibrationIntervalRef.current !== null) {
+      window.clearInterval(vibrationIntervalRef.current)
+      vibrationIntervalRef.current = null
+    }
+    if ('vibrate' in navigator) {
+      navigator.vibrate(0)
+    }
+  }
 
   // keep ref aligned with state (when session changes externally)
   useEffect(() => {
@@ -53,6 +108,18 @@ export function LiveTimerScreen({
     const id = window.setInterval(() => setNow(Date.now()), 150)
     return () => window.clearInterval(id)
   }, [])
+
+  useEffect(() => {
+    if (session.isTimeout) {
+      startTimeoutAlerts()
+    } else {
+      stopTimeoutAlerts()
+    }
+    return () => {
+      stopTimeoutAlerts()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session.isTimeout])
 
   const remainingMs = useMemo(() => {
     if (session.isPaused || session.isTimeout) return session.remainingMs

@@ -140,8 +140,19 @@
 }
 
 .footer--setup {
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 0;
+}
+
+.setupTopRow {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 320px);
+  gap: 12px;
+  align-items: stretch;
+  margin-bottom: 12px;
+}
+
+.card--turnLength {
+  margin: 0;
 }
 
 .list {

@@ -40,32 +40,34 @@ export function SetupScreen({
         </div>
       </header>
 
-      <div className="card">
-        <div className="row row--between row--gap">
-          <div>
-            <div className="label">Turn length (seconds)</div>
+      <div className="setupTopRow">
+        <div className="card card--turnLength">
+          <div className="row row--between row--gap">
+            <div>
+              <div className="label">Turn length (seconds)</div>
+            </div>
+            <input
+              className="input input--num"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              value={template.turnSeconds}
+              onChange={(e) => {
+                const raw = Number(e.target.value)
+                onTemplateChange({
+                  ...template,
+                  turnSeconds: clampInt(Number.isFinite(raw) ? raw : template.turnSeconds, 1, 60 * 60),
+                })
+              }}
+              aria-label="Turn length seconds"
+            />
           </div>
-          <input
-            className="input input--num"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={template.turnSeconds}
-            onChange={(e) => {
-              const raw = Number(e.target.value)
-              onTemplateChange({
-                ...template,
-                turnSeconds: clampInt(Number.isFinite(raw) ? raw : template.turnSeconds, 1, 60 * 60),
-              })
-            }}
-            aria-label="Turn length seconds"
-          />
         </div>
-      </div>
 
-      <div className="footer footer--setup">
-        <button className="btn btn--primary btn--xl" type="button" disabled={!canStart} onClick={onStart}>
-          Start Game Timer
-        </button>
+        <div className="footer footer--setup">
+          <button className="btn btn--primary btn--xl" type="button" disabled={!canStart} onClick={onStart}>
+            Start Game Timer
+          </button>
+        </div>
       </div>
 
       <div className="card">
