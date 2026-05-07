@@ -1,0 +1,295 @@
+.app {
+  min-height: 100svh;
+}
+
+.screen {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 18px 16px 28px;
+}
+
+.screen.live {
+  max-width: none;
+  margin: 0;
+  min-height: 100svh;
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.92);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.topbar--live {
+  margin-bottom: 0;
+}
+
+.topbar__title h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.kicker {
+  font-size: 12px;
+  opacity: 0.75;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 14px;
+  backdrop-filter: blur(10px);
+}
+
+.card--glass {
+  background: rgba(0, 0, 0, 0.22);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row--between {
+  justify-content: space-between;
+}
+
+.row--gap {
+  gap: 12px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.hint {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.18);
+  color: inherit;
+}
+
+.input--num {
+  width: 120px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn {
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  color: inherit;
+  font-weight: 600;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+.btn--primary {
+  background: rgba(0, 0, 0, 0.42);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+.btn--danger {
+  background: rgba(0, 0, 0, 0.42);
+  border-color: rgba(255, 120, 120, 0.5);
+}
+
+.btn--xl {
+  padding: 20px 16px;
+  border-radius: 14px;
+  font-size: 20px;
+  min-height: 74px;
+}
+
+.btn--live {
+  padding: 40px 16px;
+  font-size: 24px;
+  min-height: 138px;
+}
+
+.footer {
+  margin-top: 14px;
+}
+
+.footer .btn {
+  width: 100%;
+}
+
+.footer--setup {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty {
+  opacity: 0.75;
+  padding: 10px 0;
+}
+
+.playerRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playerRow__main {
+  display: flex;
+  gap: 10px;
+  flex: 1 1 220px;
+  align-items: center;
+}
+
+.playerRow__actions {
+  display: flex;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.presets {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.preset {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+}
+
+.preset--active {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
+}
+
+.timerCard {
+  flex: 0 0 auto;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 18px;
+  text-align: center;
+}
+
+.timerValue {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.badge {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.18);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.badge--timeout {
+  border-color: rgba(255, 210, 120, 0.55);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 10px;
+}
+
+.controls + .controls {
+  grid-template-columns: 1fr;
+}
+
+.totals {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.totalsRow,
+.summaryRow {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.summaryRow {
+  grid-template-columns: auto auto 1fr auto;
+}
+
+.summaryRow__rank {
+  font-weight: 800;
+  opacity: 0.8;
+  min-width: 38px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+}
+
+.totalsRow__val,
+.summaryRow__val {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 420px) {
+  .timerValue {
+    font-size: 48px;
+  }
+
+  .timerCard {
+    min-height: 180px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}
